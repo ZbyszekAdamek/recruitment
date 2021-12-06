@@ -1,9 +1,12 @@
 package com.example.recruitment.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Entity
 public class Student {
@@ -13,8 +16,10 @@ public class Student {
     private Integer age;
     private String email;
     private String course;
+    @Id
+    @GeneratedValue
     private Long id;
-    @ManyToMany
+    @ManyToMany(targetEntity = Teacher.class)
     private List<Teacher> teachers;
 
     public Student(String name, String surname, Integer age, String email, String course, Long id, List<Teacher> teachers) {
@@ -65,8 +70,15 @@ public class Student {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmail(String teacherEmail) {
+        Pattern p = Pattern.compile(".+@.+\\.[a-z]+");
+        Matcher m = p.matcher(teacherEmail);
+
+        boolean matchFound = m.matches();
+
+        if (matchFound) {
+            this.email = teacherEmail;
+        } else throw new IllegalArgumentException();
     }
 
     public String getCourse() {

@@ -1,9 +1,12 @@
 package com.example.recruitment.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Entity
 public class Teacher {
@@ -13,8 +16,10 @@ public class Teacher {
     private Integer age;
     private String email;
     private String subject;
+    @Id
+    @GeneratedValue
     private Long id;
-    @ManyToMany
+    @ManyToMany(targetEntity = Student.class)
     private List<Student> students;
 
     public Teacher(String name, String surname, Integer age, String email, String subject, Long id, List<Student> students) {
@@ -36,7 +41,7 @@ public class Teacher {
     }
 
     public void setName(String teacherName) {
-        if(teacherName.length() < 2){
+        if (teacherName.length() < 2) {
             throw new IllegalArgumentException();
         }
         this.name = teacherName;
@@ -55,7 +60,7 @@ public class Teacher {
     }
 
     public void setAge(Integer ageParameter) {
-        if(ageParameter < 18){
+        if (ageParameter < 18) {
             throw new IllegalArgumentException();
         }
         this.age = ageParameter;
@@ -65,8 +70,15 @@ public class Teacher {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmail(String teacherEmail) {
+        Pattern p = Pattern.compile(".+@.+\\.[a-z]+");
+        Matcher m = p.matcher(teacherEmail);
+
+        boolean matchFound = m.matches();
+
+        if (matchFound) {
+            this.email = teacherEmail;
+        } else throw new IllegalArgumentException();
     }
 
     public String getSubject() {
