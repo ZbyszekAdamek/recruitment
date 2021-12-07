@@ -10,6 +10,9 @@ public class Student {
     @Id
     private Long id;
     private String name;
+    private String surname;
+    private String email;
+    private String course;
 
     @ManyToMany(
             cascade = {CascadeType.MERGE, CascadeType.PERSIST}
@@ -21,12 +24,41 @@ public class Student {
     )
     private Set<Teacher> teachers = new HashSet<>();
 
-    public Student(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+
 
     public Student() {
+    }
+
+    public Student(Long id, String name, String surname, String email, String course) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.course = course;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getCourse() {
+        return course;
+    }
+
+    public void setCourse(String course) {
+        this.course = course;
     }
 
     public Long getId() {
