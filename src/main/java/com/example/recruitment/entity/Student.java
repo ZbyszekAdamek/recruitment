@@ -3,6 +3,8 @@ package com.example.recruitment.entity;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Entity(name = "students")
 public class Student {
@@ -49,8 +51,15 @@ public class Student {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmail(String studentEmail) {
+        Pattern p = Pattern.compile("[_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.([a-zA-Z]{2,}){1}");
+        Matcher m = p.matcher(studentEmail);
+
+        boolean matchFound = m.matches();
+        if(matchFound){
+            this.email = studentEmail;
+        }
+        else throw new IllegalArgumentException();
     }
 
     public String getCourse() {
@@ -73,8 +82,11 @@ public class Student {
         return this.name;
     }
 
-    public void setName(final String name) {
-        this.name = name;
+    public void setName(final String studentName) {
+        if(studentName.length() < 2){
+            throw new IllegalArgumentException();
+        }
+        this.name = studentName;
     }
 
     public void addTeacher(Teacher teacher) {
