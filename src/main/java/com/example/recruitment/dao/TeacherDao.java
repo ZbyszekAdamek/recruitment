@@ -33,7 +33,7 @@ public class TeacherDao {
         return entityManager.find(Teacher.class, id);
     }
     public List findAll(){
-        Query query = entityManager.createQuery("SELECT t from Teacher t");
+        Query query = entityManager.createQuery("select t from teachers t", Teacher.class);
         return query.getResultList();
     }
 }

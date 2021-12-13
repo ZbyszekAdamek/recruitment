@@ -1,16 +1,11 @@
 package com.example.recruitment;
 
-import com.example.recruitment.entity.Student;
-import com.example.recruitment.entity.Teacher;
 import com.example.recruitment.repository.StudentRepository;
 import com.example.recruitment.repository.TeacherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -20,6 +15,7 @@ public class DbInit implements CommandLineRunner {
     private final TeacherRepository teacherRepository;
 
 
+    //dane testowe przygotowane do startu aplikacji
     @Override
     public void run(String... args) throws Exception {
 //        Student student1 = new Student("Jan", "Nowak", "Jank@wp.pl", "przyroda");

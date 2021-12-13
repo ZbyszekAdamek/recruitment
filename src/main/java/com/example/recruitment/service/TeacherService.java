@@ -43,6 +43,11 @@ public class TeacherService {
     public List<StudentDto> getStudentTeachedByTeacher(Long id) {
         Teacher teacher = teacherRepository.findById(id).orElseThrow(() -> new TeacherNotFoundException(String.format("Nauczyciel o ID %s nie istnieje", id)));
         return teacher.getStudents().stream().map(student -> new StudentDto(student.getId(), student.getName(), student.getSurname(), student.getEmail(), student.getCourse())).collect(Collectors.toList());
-
+    }
+    public void saveTeacher(Teacher teacher) {
+        teacherDao.createTeacher(teacher);
+    }
+    public List FindAllTeachers(){
+        return teacherDao.findAll();
     }
 }

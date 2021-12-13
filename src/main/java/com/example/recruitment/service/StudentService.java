@@ -1,10 +1,13 @@
 package com.example.recruitment.service;
 
+import com.example.recruitment.controller.StudentNotFoundException;
 import com.example.recruitment.controller.TeacherNotFoundException;
+import com.example.recruitment.dao.StudentDao;
 import com.example.recruitment.dao.TeacherDao;
 import com.example.recruitment.dto.StudentDto;
 import com.example.recruitment.dto.TeacherDto;
 import com.example.recruitment.entity.Student;
+import com.example.recruitment.entity.Teacher;
 import com.example.recruitment.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -25,6 +28,7 @@ public class StudentService {
     private static final int PAGE_SIZE = 10;
     private final TeacherDao teacherDao;
     private final TeacherDto teacherDto;
+    private final StudentDao studentDao;
 
     public Page<StudentDto> listOfStudents(Optional<Integer> page, Optional<String> sortBy) {
         List<StudentDto> students = studentRepository
@@ -41,7 +45,13 @@ public class StudentService {
     }
 
     public List<TeacherDto> getTeacherTeachingStudent(Long id) {
-        Student student = studentRepository.findById(id).orElseThrow(() -> new TeacherNotFoundException(String.format("Nauczyciel o ID %s nie istnieje", id)));
+        Student student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(String.format("Student o ID %s nie istnieje", id)));
         return student.getTeachers().stream().map(teacher -> new TeacherDto(teacher.getId(), teacher.getName(), teacher.getSurname(), teacher.getAge(), teacher.getEmail(), teacher.getSubject())).collect(Collectors.toList());
+    }
+    public void saveStudent(Student student) {
+        studentDao.createStudent(student);
+    }
+    public List FindAllStudents(){
+        return studentDao.findAll();
     }
 }

@@ -1,12 +1,12 @@
 package com.example.recruitment.entity;
 
-import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Entity(name = "teachers")
 public class Teacher {
@@ -14,9 +14,12 @@ public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Size(min = 3)
     private String name;
     private String surname;
+    @Min(19)
     private Integer age;
+    @Email
     private String email;
     private String subject;
 
@@ -50,11 +53,8 @@ public class Teacher {
         return age;
     }
 
-    public void setAge(Integer ageParameter) {
-        if(ageParameter < 18){
-            throw new IllegalArgumentException();
-        }
-        this.age = ageParameter;
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
     public String getEmail() {
@@ -62,14 +62,7 @@ public class Teacher {
     }
 
     public void setEmail(String teacherEmail) {
-        Pattern p = Pattern.compile("[_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.([a-zA-Z]{2,}){1}");
-        Matcher m = p.matcher(teacherEmail);
-
-        boolean matchFound = m.matches();
-        if(matchFound){
-            this.email = teacherEmail;
-        }
-        else throw new IllegalArgumentException();
+    this.email = email;
     }
 
     public String getSubject() {
@@ -88,11 +81,8 @@ public class Teacher {
         return this.name;
     }
 
-    public void setName(final String teacherName) {
-        if(teacherName.length() < 2){
-            throw new IllegalArgumentException();
-        }
-        this.name = teacherName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Set<Student> getStudents() {

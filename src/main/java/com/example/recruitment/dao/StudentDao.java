@@ -33,7 +33,7 @@ public class StudentDao {
         return entityManager.find(Student.class, id);
     }
     public List findAll(){
-        Query query = entityManager.createQuery("SELECT s from Student s");
+        Query query = entityManager.createQuery("SELECT s from students s", Student.class);
         return query.getResultList();
     }
 }
