@@ -1,6 +1,5 @@
 package com.example.recruitment.dto;
 
-import com.example.recruitment.entity.Student;
 import lombok.*;
 import org.springframework.stereotype.Service;
 

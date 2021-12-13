@@ -7,7 +7,6 @@ import com.example.recruitment.dao.TeacherDao;
 import com.example.recruitment.dto.StudentDto;
 import com.example.recruitment.dto.TeacherDto;
 import com.example.recruitment.entity.Student;
-import com.example.recruitment.entity.Teacher;
 import com.example.recruitment.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
