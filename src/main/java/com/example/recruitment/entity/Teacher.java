@@ -1,8 +1,8 @@
 package com.example.recruitment.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 public class Teacher {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String surname;
@@ -19,11 +20,10 @@ public class Teacher {
     private String email;
     private String subject;
 
-    @ManyToMany(mappedBy = "teachers")
+    @ManyToMany(mappedBy = "teachers", fetch = FetchType.EAGER)
     private Set<Student> students = new HashSet<>();
 
-    public Teacher(Long id, String name, String surname, Integer age, String email, String subject) {
-        this.id = id;
+    public Teacher(String name, String surname, Integer age, String email, String subject) {
         this.name = name;
         this.surname = surname;
         this.age = age;
@@ -32,6 +32,10 @@ public class Teacher {
     }
 
     public Teacher() {
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getSurname() {
@@ -74,10 +78,6 @@ public class Teacher {
 
     public void setSubject(String subject) {
         this.subject = subject;
-    }
-
-    public Long getId() {
-        return this.id;
     }
 
     public void setId(final Long id) {

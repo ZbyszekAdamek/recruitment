@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 public class Student {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String surname;
@@ -17,7 +18,7 @@ public class Student {
     private String course;
 
     @ManyToMany(
-            cascade = {CascadeType.MERGE, CascadeType.PERSIST}
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY
     )
     @JoinTable(
             name = "students_teachers",
@@ -31,8 +32,7 @@ public class Student {
     public Student() {
     }
 
-    public Student(Long id, String name, String surname, String email, String course) {
-        this.id = id;
+    public Student(String name, String surname, String email, String course) {
         this.name = name;
         this.surname = surname;
         this.email = email;
